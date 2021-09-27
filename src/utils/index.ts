@@ -34,6 +34,11 @@ export function timeEnd(label: string) {
     console.log(chalk.yellow(label), chalk.blue(`${time}ms`));
   }
 
+  const callback = global[Symbol.for('_monitorCallback')];
+  if (callback) {
+    callback(label, time);
+  }
+
   return {
     label,
     time,

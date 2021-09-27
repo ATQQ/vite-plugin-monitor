@@ -4,10 +4,14 @@ import { createLabelKey, timeEnd, timeStart } from './utils';
 import type { PluginOptions } from './types';
 
 export default function Monitor(ops: PluginOptions = {}): Plugin {
-  const { log } = ops;
+  const { log, callback } = ops;
 
   if (log) {
     global[Symbol.for('_monitorLog')] = log;
+  }
+
+  if (callback) {
+    global[Symbol.for('_monitorCallback')] = callback;
   }
 
   global[createLabelKey('ready')] = global.__vite_start_time;
