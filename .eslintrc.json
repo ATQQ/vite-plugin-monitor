@@ -21,5 +21,10 @@
         "@typescript-eslint"
     ],
     "rules": {
+        "@typescript-eslint/explicit-module-boundary-types":"off",
+        "import/extensions":"off",
+        "no-underscore-dangle":"off",
+        "import/no-unresolved":"off",
+        "no-console":"off"
     }
 }
