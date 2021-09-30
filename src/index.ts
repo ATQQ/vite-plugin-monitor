@@ -4,16 +4,46 @@ import { createLabelKey, timeEnd, timeStart } from './utils';
 import type { PluginOptions } from './types';
 
 export default function Monitor(ops: PluginOptions = {}): Plugin {
-  const { log, callback } = ops;
+  const { log, monitor, debug } = ops;
 
   if (log) {
     global[Symbol.for('_monitorLog')] = log;
   }
 
-  if (callback) {
-    global[Symbol.for('_monitorCallback')] = callback;
+  if (typeof monitor === 'function') {
+    global[Symbol.for('_monitorCallback')] = monitor;
   }
+  if (typeof debug === 'function' && process.env.DEBUG) {
+    const { write } = process.stderr;
+    if (log) {
+      console.log('vite-plugin-monitor  monitor-debug');
+    }
+    Object.defineProperty(process.stderr, 'write', {
+      get() {
+        return function _write(...argvs) {
+          // 开启了才打印原来的
+          if (log) {
+            write.apply(this, arguments);
+          }
+          const originStr = argvs[0];
+          // TODO: 继续,分离 time 中间内容 +xxTime
+          const res = originStr.match(/vite:(.*?)\s.*\s(\d+)ms/) || [];
+          const [_, tag, time1] = res;
+          if (tag && time1) {
+            console.log(tag, time1);
+          }
 
+          debug(...argvs);
+        };
+      },
+    });
+    // 保留原来的
+    Object.defineProperty(process.stderr, '_write', {
+      get() {
+        return write;
+      },
+    });
+  }
   global[createLabelKey('ready')] = global.__vite_start_time;
 
   return {
@@ -33,6 +63,7 @@ export default function Monitor(ops: PluginOptions = {}): Plugin {
           timeStart('hmr_update');
         }
       };
+      // server.middlewares.use()
       server.middlewares.use(async (req, res, next) => {
         const { search } = new URL(req.url, `http://${req.headers.host}`);
         if (
