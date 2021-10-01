@@ -13,7 +13,7 @@ export default function Monitor(ops: PluginOptions = {}): Plugin {
   if (typeof monitor === 'function') {
     global[Symbol.for('_monitorCallback')] = monitor;
   }
-  if (typeof debug === 'function' && process.env.DEBUG) {
+  if ((typeof debug === 'function' || typeof monitor === 'function') && process.env.DEBUG) {
     const { write } = process.stderr;
     if (log) {
       console.log('vite-plugin-monitor  monitor-debug');
@@ -31,15 +31,16 @@ export default function Monitor(ops: PluginOptions = {}): Plugin {
           const time2 = (originStr.match(/\+(\d+)ms/) || [])[1];
           // console.log([originStr.replace(/\\[x]/g, '')]);
           const time = +(time1 || 0) + +(time2 || 0);
-          if (tag) {
+          if (tag && monitor) {
             monitor(tag, time, {
               time1: +(time1 || 0),
               time2: +(time2 || 0),
               originValue: originStr,
             });
           }
-
-          debug(...argv);
+          if (debug) {
+            debug(...argv);
+          }
         };
       },
     });

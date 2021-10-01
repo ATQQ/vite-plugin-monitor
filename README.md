@@ -18,12 +18,11 @@ import vitePluginMonitor from 'vite-plugin-monitor'
 export default defineConfig({
   plugins: [
     vitePluginMonitor({
-      log: false,
+      // log: false,
       monitor(label, time, originData) {
-        // 打印原日志
-        console.log(originData.originValue)
-        // 打印简单日志(处理后)
-        console.log(label, `${time}ms`)
+        const { time1, time2, originValue } = originVal
+        console.log(originValue)
+        console.log(label, time1, time2, `${time}ms`)
       },
       debug(str) {
         // 打印完整日志
