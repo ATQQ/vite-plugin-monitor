@@ -1,13 +1,19 @@
 {
   "name": "vite-plugin-monitor",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsc -w -p .",
     "build": "rimraf dist && tsc -p .",
     "prepublish": "npm run build"
   },
-  "keywords": ["vite","vite-plugin","monitor","vite-plugin-monitor","debug"],
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "monitor",
+    "vite-plugin-monitor",
+    "debug"
+  ],
   "author": "sugarat",
   "license": "MIT",
   "repository": {
