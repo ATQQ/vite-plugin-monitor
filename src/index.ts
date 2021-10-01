@@ -30,11 +30,11 @@ export default function Monitor(ops: PluginOptions = {}): Plugin {
           const time1 = (originStr.replace(/\+\d+ms/, '').match(/(\d+)ms/) || [])[1];
           const time2 = (originStr.match(/\+(\d+)ms/) || [])[1];
           // console.log([originStr.replace(/\\[x]/g, '')]);
-
+          const time = +(time1 || 0) + +(time2 || 0);
           if (tag) {
-            monitor(tag, (+time1) + (+time2), {
-              time1,
-              time2,
+            monitor(tag, time, {
+              time1: +(time1 || 0),
+              time2: +(time2 || 0),
               originValue: originStr,
             });
           }
