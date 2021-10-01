@@ -7,10 +7,18 @@
     "build": "rimraf dist && tsc -p .",
     "prepublish": "npm run build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": ["vite","vite-plugin","monitor","vite-plugin-monitor","debug"],
+  "author": "sugarat",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ATQQ/vite-plugin-monitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ATQQ/vite-plugin-monitor/issues"
+  },
+  "homepage": "https://github.com/ATQQ/vite-plugin-monitor/tree/main/#readme",
+  "description": "提供获取启动，HMR时间等简单指标，拦截 --debug 下的所有日志的能力",
   "devDependencies": {
     "@types/node": "^16.10.1",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
