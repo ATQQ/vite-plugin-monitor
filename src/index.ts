@@ -20,20 +20,26 @@ export default function Monitor(ops: PluginOptions = {}): Plugin {
     }
     Object.defineProperty(process.stderr, 'write', {
       get() {
-        return function _write(...argvs) {
+        return function _write(...argv) {
           // 开启了才打印原来的
-          if (log) {
-            write.apply(this, arguments);
+          if (log && typeof argv[0] === 'string') {
+            process.stdout.write(argv[0]);
           }
-          const originStr = argvs[0];
-          // TODO: 继续,分离 time 中间内容 +xxTime
-          const res = originStr.match(/vite:(.*?)\s.*\s(\d+)ms/) || [];
-          const [_, tag, time1] = res;
-          if (tag && time1) {
-            console.log(tag, time1);
+          const originStr = argv[0];
+          const tag = (originStr.match(/vite:(.*?)\s/) || [])[1];
+          const time1 = (originStr.replace(/\+\d+ms/, '').match(/(\d+)ms/) || [])[1];
+          const time2 = (originStr.match(/\+(\d+)ms/) || [])[1];
+          // console.log([originStr.replace(/\\[x]/g, '')]);
+
+          if (tag) {
+            monitor(tag, (+time1) + (+time2), {
+              time1,
+              time2,
+              originValue: originStr,
+            });
           }
 
-          debug(...argvs);
+          debug(...argv);
         };
       },
     });
