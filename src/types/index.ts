@@ -16,6 +16,10 @@ export interface OriginDat{
      * debug打印的原始内容
      */
     originValue?:string
+    /**
+     * debug打印的原始内容(带颜色)
+     */
+    chalkValue?:string
 }
 
 /**

@@ -20,8 +20,11 @@ export default defineConfig({
     vitePluginMonitor({
       // log: false,
       monitor(label, time, originData) {
-        const { time1, time2, originValue } = originVal
+        const {
+          time1, time2, originValue, chalkValue,
+        } = originVal
         console.log(originValue)
+        console.log(chalkValue)
         console.log(label, time1, time2, `${time}ms`)
       },
       debug(str) {
@@ -48,8 +51,8 @@ export default defineConfig({
 | 参数名  |   类型   | 示例  |                说明                 |
 | :-----: | :------: | :---: | :---------------------------------: |
 |   log   | Boolean  | false | 设置为true将不会打印--debug下的日志 |
-| monitor | Function |   -   | 设置为true将不会打印--debug下的日志 |
-|  debug  | Function |   -   | 设置为true将不会打印--debug下的日志 |
+| monitor | Function |   -   |              默认回调               |
+|  debug  | Function |   -   |      debug回调--拦截debug行为       |
 ## 完整定义
 ```ts
 /**
@@ -86,7 +89,11 @@ export interface OriginDat{
     /**
      * debug打印的原始内容
      */
-    originValue?:string
+    originValue?: string;
+    /**
+     * debug打印的原始内容(带颜色)
+     */
+    chalkValue?: string;
 }
 
 /**

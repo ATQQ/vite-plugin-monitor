@@ -1,5 +1,7 @@
 import type { Plugin } from 'vite';
-import { createLabelKey, timeEnd, timeStart } from './utils';
+import {
+  createLabelKey, resetChalkStr, timeEnd, timeStart,
+} from './utils';
 
 import type { PluginOptions } from './types';
 
@@ -35,7 +37,8 @@ export default function Monitor(ops: PluginOptions = {}): Plugin {
             monitor(tag, time, {
               time1: +(time1 || 0),
               time2: +(time2 || 0),
-              originValue: originStr,
+              originValue: resetChalkStr(originStr),
+              chalkValue: originStr,
             });
           }
           if (debug) {
