@@ -1,25 +1,23 @@
-export type labelType = 'ready' | 'hmr_update'
-
 /**
  * 原来的日志
  */
-export interface OriginDat{
+export interface MonitorOriginData {
     /**
      * debug日志中的第一个时间（xxms）
      */
-    time1?:number
+    time1?: number
     /**
      * debug日志中的第二个时间（+xxms）
      */
-    time2?:number
+    time2?: number
     /**
      * debug打印的原始内容
      */
-    originValue?:string
+    originValue?: string
     /**
      * debug打印的原始内容(带颜色)
      */
-    chalkValue?:string
+    chalkValue?: string
 }
 
 /**
@@ -28,12 +26,12 @@ export interface OriginDat{
  * @param time 消耗时间（time1+time2）
  * @param origin 原日志相关内容
  */
-export type MonitorCallback = (label:string, time: number, origin?:OriginDat) => void
+export type MonitorCallback = (label: string, time: number, origin?: MonitorOriginData) => void
 
 /**
  * 拦截debug都打印日志的回调函数
  */
-export type DebugCallback = (...argvs:string[]) => void
+export type DebugCallback = (...argvs: string[]) => void
 
 /**
  * 插件参数
@@ -51,5 +49,5 @@ export interface PluginOptions {
     /**
      * debug回调
      */
-    debug?:DebugCallback
+    debug?: DebugCallback
 }
