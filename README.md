@@ -7,6 +7,8 @@
 npm install vite-plugin-monitor --dev
 # or
 yarn add vite-plugin-monitor --dev
+# or
+pnpm add -D vite-plugin-monitor
 ```
 
 ### 激活插件

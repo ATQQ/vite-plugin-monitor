@@ -1,4 +1,5 @@
 import chalk from 'chalk';
+import { performance } from 'perf_hooks';
 
 const pluginName = 'vite-plugin-monitor';
 export function createLabelKey(label:string) {
@@ -14,7 +15,7 @@ export function timeStart(label: string) {
   if (global[k]) {
     return;
   }
-  global[k] = Date.now();
+  global[k] = performance.now();
 }
 
 export function timeEnd(label: string) {
@@ -26,7 +27,7 @@ export function timeEnd(label: string) {
       time: -1,
     };
   }
-  const time = Date.now() - global[k];
+  const time = Math.ceil(performance.now() - global[k]);
   // 清空
   global[k] = null;
 

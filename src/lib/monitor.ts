@@ -1,11 +1,11 @@
-import type { Plugin } from 'vite';
+import type { PluginOption } from 'vite';
 
 import { PluginOptions } from '../types';
 import {
   createLabelKey, resetChalkStr, timeEnd, timeStart,
 } from '../utils';
 
-export default function Monitor(ops: PluginOptions = {}): Plugin {
+export default function Monitor(ops: PluginOptions = {}): PluginOption {
   const { log, monitor, debug } = ops;
 
   if (log) {
